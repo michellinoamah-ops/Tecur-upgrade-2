@@ -34,3 +34,10 @@ Thumbs.db
 !.vscode/tasks.json
 
 # dist is intentionally committed: it includes the website assets.
+# Documentation, workspace, and configuration rules to hide from GitHub
+*.md
+*.txt
+*.bat
+*.code-workspace
+firestore.rules
+storage.rules
