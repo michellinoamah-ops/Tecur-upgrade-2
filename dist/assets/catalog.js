@@ -15,34 +15,85 @@ function saveButton(b) {
     filter();
   };
 }
-function filter() {
+const PAGE_SIZE = 20;
+let currentPage = 1;
+function filter(resetPage = false) {
+  if (resetPage === true) currentPage = 1;
   if (!$("#catalog-grid")) return;
   const term = $("#catalog-search").value.toLowerCase().trim(),
     cat = $("#category-filter").value;
-  let n = 0;
-  $$("#catalog-grid .catalog-card").forEach((c) => {
-    const show =
-      c.dataset.search.includes(term) &&
-      (!cat || c.dataset.category === cat) &&
-      (!onlySaved || saved.includes(c.dataset.id));
-    c.hidden = !show;
-    if (show) n++;
-  });
-  $("#catalog-count").textContent = n + " matching " + (n === 1 ? "listing" : "listings");
+  const cards = $$("#catalog-grid .catalog-card");
+  const matches = cards.filter((c) =>
+    c.dataset.search.includes(term) &&
+    (!cat || c.dataset.category === cat) &&
+    (!onlySaved || saved.includes(c.dataset.id))
+  );
+  const n = matches.length;
+  const pages = Math.max(1, Math.ceil(n / PAGE_SIZE));
+  currentPage = Math.min(currentPage, pages);
+  const start = (currentPage - 1) * PAGE_SIZE;
+  cards.forEach((c) => { c.hidden = true; });
+  matches.slice(start, start + PAGE_SIZE).forEach((c) => { c.hidden = false; });
+  $("#catalog-count").textContent = n
+    ? `Showing ${start + 1}–${Math.min(start + PAGE_SIZE, n)} of ${n} listings`
+    : "No matching listings";
+  $("#catalog-count").setAttribute("aria-live", "polite");
   $("#catalog-empty").classList.toggle("hidden", n > 0);
+  let nav = $("#catalog-pagination");
+  if (!nav) {
+    nav = el("nav", null, "catalog-pagination");
+    nav.id = "catalog-pagination";
+    nav.setAttribute("aria-label", "Listing pages");
+    $("#catalog-grid").after(nav);
+  }
+  nav.replaceChildren();
+  nav.hidden = pages <= 1;
+  if (pages <= 1) return;
+  function pageButton(label, page, disabled = false) {
+    const button = el("button", label);
+    button.type = "button";
+    button.disabled = disabled;
+    if (typeof label === "number") {
+      button.setAttribute("aria-label", "Page " + page);
+      if (page === currentPage) button.setAttribute("aria-current", "page");
+    }
+    button.onclick = () => {
+      currentPage = page;
+      filter();
+      const grid = $("#catalog-grid");
+      grid.setAttribute("tabindex", "-1");
+      grid.focus({ preventScroll: true });
+      grid.scrollIntoView({ block: "start", behavior: "auto" });
+    };
+    nav.append(button);
+  }
+  pageButton("Previous", currentPage - 1, currentPage === 1);
+  const visible = new Set([1, pages, currentPage - 1, currentPage, currentPage + 1]);
+  const numbers = [...visible].filter((p) => p >= 1 && p <= pages).sort((a, b) => a - b);
+  let previous = 0;
+  for (const page of numbers) {
+    if (previous && page - previous > 1) {
+      const gap = el("span", "…");
+      gap.setAttribute("aria-hidden", "true");
+      nav.append(gap);
+    }
+    pageButton(page, page);
+    previous = page;
+  }
+  pageButton("Next", currentPage + 1, currentPage === pages);
 }
 $$("[data-save]").forEach(saveButton);
-$("#catalog-search")?.addEventListener("input", filter);
-$("#category-filter")?.addEventListener("change", filter);
+$("#catalog-search")?.addEventListener("input", () => filter(true));
+$("#category-filter")?.addEventListener("change", () => filter(true));
 $("#saved-filter")?.addEventListener("click", (e) => {
   onlySaved = !onlySaved;
   e.currentTarget.setAttribute("aria-pressed", onlySaved);
-  filter();
+  filter(true);
 });
 filter();
 function el(tag, text, cls) {
   const e = document.createElement(tag);
-  if (text) e.textContent = text;
+  if (text != null) e.textContent = text;
   if (cls) e.className = cls;
   return e;
 }
@@ -66,6 +117,7 @@ function card(c) {
     el("p", c.model),
     el("div", c.price ? money(c.price) : "Request a quotation", "price"),
   );
+  body.append(el("span", "View details ↗", "listing-details"));
   a.append(img, body);
   const b = el("button", "♡", "save");
   b.dataset.save = c.id;

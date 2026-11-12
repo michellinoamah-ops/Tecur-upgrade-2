@@ -2,6 +2,10 @@ import { enquiryExtras, startTracking } from "./enquiry-media.js";
 import { $ } from "./app.js";
 import { sanitize, cleanURL, gallery } from "./content.js";
 import { schedulePopups } from "./popup.js";
+const visualStyle = document.createElement("link");
+visualStyle.rel = "stylesheet";
+visualStyle.href = "/assets/visual-refresh.css";
+document.head.append(visualStyle);
 function node(tag, text, cls) {
   const el = document.createElement(tag);
   if (text) el.textContent = text;
@@ -23,7 +27,7 @@ async function content() {
         render({ posts: currentPosts });
       }
     })
-    .catch(() => {});
+    .catch(() => { });
   try {
     const { connect } = await import("./firebase.js");
     const f = await connect();
@@ -186,7 +190,7 @@ function render({ posts = [], popups = [] }) {
         image.style.cssText = "width:100%;max-height:520px;object-fit:cover;border-radius:18px";
         article.append(image);
       }
-      const body = node("div");
+      const body = node("div", null, "article-reading");
       body.innerHTML = sanitize(post.html);
       article.append(body);
       document.title = post.title + " | Tecur Automotive";
@@ -213,7 +217,7 @@ if (location.pathname.startsWith("/parts/") && location.pathname !== "/parts/") 
         img = $(".feature > img");
       if (c && img) img.replaceWith(gallery(c.images?.length ? c.images : [c.image], c.title));
     })
-    .catch(() => {});
+    .catch(() => { });
 }
 const review = $("#booking-review");
 if (review) {

@@ -103,7 +103,6 @@ export async function mountComments(article, postId) {
       email.spellcheck = false;
       if (isAdmin && f.auth.currentUser?.email) email.value = f.auth.currentUser.email;
       emailLabel.append(email);
-      const privacy = el("small", "Your email is private. Only the website team can see it and use it to follow up on your comment. It will not appear beside your comment.");
       const bodyLabel = el("label", parentId ? "Your reply to " + targetName : "Your comment");
       const body = el("textarea");
       body.required = true;
@@ -115,7 +114,7 @@ export async function mountComments(article, postId) {
       send.type = "submit";
       const note = el("p");
       note.setAttribute("role", "status");
-      form.append(label, emailLabel, privacy, bodyLabel, send, note);
+      form.append(label, emailLabel, bodyLabel, send, note);
       form.onsubmit = async (event) => {
         event.preventDefault();
         if (send.disabled || !form.reportValidity()) return;
@@ -177,11 +176,6 @@ export async function mountComments(article, postId) {
     section.append(form());
     const list = el("div");
     section.append(list);
-    const note = el(
-      "small",
-      "Showing the latest 25 conversations. Each conversation can display its latest 50 replies.",
-    );
-    section.append(note);
     function row(snapshot, nested = false) {
       const c = snapshot.data(),
         id = snapshot.id;
