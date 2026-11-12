@@ -1,0 +1,29 @@
+COMPLETE TECUR WEBSITE - 11 NOVEMBER 2026
+
+This complete project includes the publishing fixes, article cover uploads,
+comments, likes, replies, admin replies, and Delete buttons for articles,
+pop-ups and listings. Open TECUR.code-workspace in VS Code.
+
+IF YOU ALREADY HAVE A WORKING PROJECT
+Extract into a new folder first. Preserve your existing dist/assets/config.js,
+including your App Check site key. Also preserve custom domain, hosting settings,
+private environment files and any locally edited content. Do not overwrite these
+with the default copies without merging your changes.
+
+Publish the included Firestore rules and comments index, enable Anonymous sign-in,
+and deploy the updated website assets. PUBLISHING-AND-COMMENTS-SETUP.txt contains
+the full activation steps. Rules alone do not deploy website code.
+
+DELETING CONTENT
+Sign in to Admin. Use Delete beside an article, pop-up or listing and confirm.
+Only authorised admins can delete these records. Cancel leaves the item unchanged.
+The admin list updates only when the database confirms deletion. An error leaves
+the record visible so you can retry. Database deletion is not an undoable archive.
+
+Uploaded pictures are retained, since other content may use the same picture.
+Deleting an article hides its comment thread but retains comment and like records
+in the database. This is content removal, not a complete personal-data erasure tool.
+Pop-ups already displayed may remain until the visitor refreshes. If you previously
+exported static article/listing pages, regenerate those exports and redeploy too.
+
+Your live project settings and deployment must be verified in your own account.

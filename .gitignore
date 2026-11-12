@@ -1,0 +1,36 @@
+# Installed packages and local caches
+node_modules/
+.firebase/
+.cache/
+coverage/
+__pycache__/
+*.py[cod]
+
+# Private environment settings and credentials
+.env
+.env.*
+!.env.example
+secrets/
+credentials/
+*service-account*.json
+*serviceAccount*.json
+*firebase-adminsdk*.json
+*credentials*.json
+application_default_credentials.json
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Logs, archives and local machine files
+*.log
+*.zip
+*.tar.gz
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/tasks.json
+
+# dist is intentionally committed: it includes the website assets.

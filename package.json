@@ -1,0 +1,31 @@
+{
+  "name": "tecur-automotive",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "python3 scripts/build.py && prettier --write dist",
+    "check": "node --check dist/assets/app.js && node --check dist/assets/firebase.js && node --check dist/assets/admin.js && python3 scripts/check.py",
+    "sync": "node scripts/sync-catalog.mjs",
+    "test:rules": "firebase emulators:exec --only firestore --project demo-tecur \"node tests/firestore.test.mjs\"",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "preview": "node scripts/preview.mjs"
+  },
+  "optionalDependencies": {
+    "firebase-admin": "14.5.0"
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "6.0.0",
+    "firebase": "13.1.0",
+    "firebase-tools": "15.34.2",
+    "mammoth": "1.13.0",
+    "dompurify": "3.4.17",
+    "prettier": "3.6.2"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "overrides": {
+    "@grpc/grpc-js": "^1.13.6"
+  }
+}

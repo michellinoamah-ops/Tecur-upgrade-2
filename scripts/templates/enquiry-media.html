@@ -1,0 +1,33 @@
+<section class="enquiry-extras" aria-label="Optional enquiry details">
+  <div class="step-label">SHOW US WHAT YOU NEED · OPTIONAL</div>
+  <h3>A picture helps.</h3>
+  <p class="small-note">
+    Add up to 3 photos of your car or the part you need. JPEG, PNG or WebP, up to 5 MB each. Avoid
+    faces, documents and anything private.
+  </p>
+  <label
+    >Choose car or part photos<input
+      id="enquiry-photos"
+      type="file"
+      accept="image/jpeg,image/png,image/webp"
+      multiple
+  /></label>
+  <div id="enquiry-photo-preview" class="enquiry-photo-preview"></div>
+  <p id="photo-status" role="status" class="small-note"></p>
+  <div id="mobile-location" hidden>
+    <h3>Help us find you.</h3>
+    <p class="small-note">
+      Optional: share your current position with your enquiry. Choose live updates to share for up
+      to 30 minutes after sending directly to our team. Keep this page open; updates may pause when
+      your phone locks.
+    </p>
+    <button type="button" class="btn ghost" id="get-location">Use my current location</button
+    ><button type="button" class="btn ghost" id="clear-location" hidden>Remove location</button
+    ><label class="location-choice"
+      ><input id="live-location" type="checkbox" disabled />Keep sharing live updates after I send
+      (up to 30 minutes)</label
+    >
+    <p id="location-status" role="status" class="small-note">Location has not been shared.</p>
+    <button type="button" id="stop-location" class="btn" hidden>Stop live location</button>
+  </div>
+</section>

@@ -1,0 +1,170 @@
+<dialog class="dialog wide-dialog" id="post-editor">
+  <div class="dialog-head">
+    <h2>Publishing studio</h2>
+    <button class="icon-btn" data-close aria-label="Close publishing studio">×</button>
+  </div>
+  <form id="post-form">
+    <input type="hidden" name="id" />
+    <div class="form-row">
+      <label>Post title<input name="title" required maxlength="160" /></label
+      ><label
+        >URL slug<input name="slug" required pattern="[a-z0-9]+(-[a-z0-9]+)*" maxlength="100"
+      /></label>
+    </div>
+    <label
+      >Summary / search description<textarea
+        name="excerpt"
+        required
+        maxlength="300"
+        rows="2"
+      ></textarea>
+    </label>
+    <div class="form-row">
+      <label>Author<input name="author" required maxlength="100" value="Tecur Automotive" /></label
+      ><label
+        >Visibility<select name="status">
+          <option value="draft">Draft</option>
+          <option value="published">Published</option>
+          <option value="archived">Archived</option>
+        </select></label
+      >
+    </div>
+    <label>Cover photo URL<input name="cover" maxlength="1500" type="url" /></label
+    ><label
+      >Import document (.docx, .html or .txt; maximum 5 MB)<input
+        id="document-import"
+        type="file"
+        accept=".docx,.html,.htm,.txt"
+    /></label>
+    <p class="muted small-note">
+      Word imports retain headings, paragraphs, embedded images and tables. Review the result;
+      page-layout details and floating shapes may change. Legacy .doc and PDF files must first be
+      converted to .docx.
+    </p>
+    <div class="editor-toolbar" role="toolbar" aria-label="Article formatting">
+      <button type="button" data-format="bold">Bold</button
+      ><button type="button" data-format="italic">Italic</button
+      ><button type="button" data-format="underline">Underline</button
+      ><button type="button" data-block="h2">Heading</button
+      ><button type="button" data-block="p">Paragraph</button
+      ><button type="button" data-format="insertUnorderedList">Bullets</button
+      ><button type="button" data-format="insertOrderedList">Numbering</button
+      ><button type="button" id="insert-link">Link</button
+      ><button type="button" id="insert-table">Table</button
+      ><button type="button" id="insert-image">Image</button
+      ><button type="button" data-format="undo">Undo</button
+      ><button type="button" data-format="redo">Redo</button
+      ><button type="button" data-format="removeFormat">Clear format</button>
+    </div>
+    <input type="file" id="article-image" accept="image/png,image/jpeg,image/webp" hidden />
+    <div
+      id="rich-editor"
+      contenteditable="true"
+      role="textbox"
+      aria-label="Article content"
+      aria-multiline="true"
+      class="rich-editor article-body"
+    ></div>
+    <div class="inline-actions">
+      <button type="button" id="post-preview" class="btn ghost">Preview article</button
+      ><button class="btn" type="submit">Save post</button>
+    </div>
+    <p id="post-status" role="status"></p>
+  </form>
+</dialog>
+<dialog class="dialog wide-dialog" id="article-preview">
+  <div class="dialog-head">
+    <h2>Article preview</h2>
+    <button data-close class="icon-btn" aria-label="Close article preview">×</button>
+  </div>
+  <article class="article-body" id="article-preview-body"></article>
+</dialog>
+<dialog class="dialog" id="popup-editor">
+  <div class="dialog-head">
+    <h2>Pop-up designer</h2>
+    <button class="icon-btn" data-close aria-label="Close pop-up designer">×</button>
+  </div>
+  <form id="popup-form">
+    <input name="id" type="hidden" /><label
+      >Headline<input name="title" required maxlength="120" /></label
+    ><label>Message<textarea name="body" required maxlength="600" rows="3"></textarea></label>
+    <div class="form-row">
+      <label
+        >Template<select name="template">
+          <option value="modal">Centred announcement</option>
+          <option value="image">Photo feature</option>
+          <option value="banner">Bottom banner</option>
+          <option value="card">Corner card</option>
+        </select></label
+      ><label
+        >State<select name="status">
+          <option value="draft">Off / draft</option>
+          <option value="published">On / published</option>
+          <option value="archived">Archived</option>
+        </select></label
+      >
+    </div>
+    <label>Photo URL (photo template)<input name="image" maxlength="1500" /></label
+    ><label
+      >Or upload a photo<input name="photo" type="file" accept="image/png,image/jpeg,image/webp"
+    /></label>
+    <div class="form-row">
+      <label>Button text<input name="button" maxlength="60" value="Book a service" /></label
+      ><label
+        >Button destination<input name="url" required maxlength="1500" value="/book/"
+      /></label>
+    </div>
+    <label
+      >Show on paths (comma separated, or * for all)<input
+        name="pages"
+        required
+        maxlength="500"
+        value="/"
+    /></label>
+    <div class="form-row">
+      <label
+        >Trigger<select name="trigger">
+          <option value="delay">Time on page</option>
+          <option value="scroll">Scroll progress</option>
+        </select></label
+      ><label
+        >Frequency<select name="frequency">
+          <option value="session">Once per session</option>
+          <option value="daily">Once per 24 hours</option>
+          <option value="always">Every page visit</option>
+        </select></label
+      ><label
+        >Delay in seconds<input
+          name="delay"
+          required
+          type="number"
+          min="0"
+          max="600"
+          value="8" /></label
+      ><label
+        >Scroll percentage<input
+          name="threshold"
+          required
+          type="number"
+          min="10"
+          max="95"
+          value="50" /></label
+      ><label>Start (your local time)<input name="startsAt" type="datetime-local" /></label
+      ><label>End (your local time)<input name="endsAt" type="datetime-local" /></label
+      ><label
+        >Priority (highest appears first)<input
+          name="priority"
+          required
+          type="number"
+          min="0"
+          max="100"
+          value="0"
+      /></label>
+    </div>
+    <div class="inline-actions">
+      <button type="button" class="btn ghost" id="preview-popup">Preview design</button
+      ><button class="btn" type="submit">Save pop-up</button>
+    </div>
+    <p id="popup-status" role="status"></p>
+  </form>
+</dialog>

@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en-NG">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#17185f" />
+    <title>Admin workspace | Tecur Automotive</title>
+    <meta
+      name="description"
+      content="Secure listing management and workshop operations for authorised Tecur staff."
+    />
+    <meta name="robots" content="noindex,nofollow" />
+    <link
+      rel="canonical"
+      href="https://tecur-automotive-studio.michellinoamah.chatgpt.site/admin/"
+    />
+    <meta property="og:title" content="Admin workspace | Tecur Automotive" />
+    <meta
+      property="og:description"
+      content="Secure listing management and workshop operations for authorised Tecur staff."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://tecur-automotive-studio.michellinoamah.chatgpt.site/admin/"
+    />
+    <meta
+      property="og:image"
+      content="https://tecur-automotive-studio.michellinoamah.chatgpt.site/assets/hero.jpg"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/assets/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/app-icon-180.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="TECUR" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="stylesheet" href="/assets/style.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Admin workspace",
+        "url": "https://tecur-automotive-studio.michellinoamah.chatgpt.site/admin/"
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="header">
+      <div class="nav shell">
+        <a href="/" class="brand" aria-label="Tecur Automotive home"
+          ><img src="/assets/tecur-logo.jpg" alt="Tecur Automotive" width="1536" height="1536"
+        /></a>
+        <nav class="navlinks" id="navlinks" aria-label="Main navigation">
+          <a class="" href="/services/">Services</a><a class="" href="/parts/">Parts & listings</a
+          ><a class="" href="/garage/">My Toyota</a><a class="" href="/journal/">Car guides</a
+          ><a class="" href="/before-you-pay/">Before you pay</a
+          ><a class="" href="/about/">About</a>
+        </nav>
+        <div class="nav-right">
+          <button class="icon-btn" data-command aria-label="Search and quick navigation">⌕</button
+          ><a class="btn" href="/book/">Book a service <span aria-hidden="true">↗</span></a
+          ><button
+            class="icon-btn menu-toggle"
+            aria-label="Open menu"
+            aria-controls="navlinks"
+            aria-expanded="false"
+          >
+            ☰
+          </button>
+        </div>
+      </div>
+    </header>
+    <main id="main">
+      <section class="page-head">
+        <div class="shell">
+          <div class="breadcrumb"><a href="/">Home</a> / Tecur operations</div>
+          <div class="eyebrow">Tecur operations</div>
+          <h1>THE CONTROL<br />ROOM.</h1>
+          <p>One focused workspace for listings, enquiries and the next thing that needs doing.</p>
+        </div>
+      </section>
+      <section class="section" style="padding-top: 15px">
+        <div class="shell">
+          <div id="admin-login" class="grid two">
+            <form class="form-box" id="login-form">
+              <div class="eyebrow">Authorised staff only</div>
+              <h3>Sign in to your workspace</h3>
+              <p style="margin: 15px 0">Sign in with your authorised staff email and password.</p>
+              <label
+                >Email<input type="email" name="email" required autocomplete="username" /></label
+              ><label
+                >Password<input
+                  type="password"
+                  name="password"
+                  required
+                  autocomplete="current-password"
+                  minlength="6" /></label
+              ><button class="btn">Sign in ↗</button
+              ><button type="button" class="btn ghost" id="reset-password">Reset password</button>
+              <p class="form-status" id="login-status" role="status"></p>
+            </form>
+          </div>
+          <div id="admin-workspace" hidden>
+            <div class="section-head">
+              <div>
+                <span class="admin-mode" id="admin-mode"></span>
+                <h3 style="margin-top: 20px">The workshop, in focus.</h3>
+              </div>
+              <button class="btn ghost" id="logout">Sign out</button>
+            </div>
+            <div class="admin-layout">
+              <aside class="admin-side">
+                <button class="active" data-tab="overview">↗ Overview</button
+                ><button data-tab="inventory">▦ Listings</button
+                ><button data-tab="requests">☷ Request tracker</button
+                ><button data-tab="settings">⚙ Settings & export</button
+                ><button data-tab="posts">▤ Blog posts</button
+                ><button data-tab="popups">◈ Pop-ups</button>
+              </aside>
+              <div>
+                <section data-panel="overview">
+                  <div class="grid three">
+                    <div class="stat">
+                      <small>Total listings</small><strong id="stat-all">0</strong>
+                    </div>
+                    <div class="stat">
+                      <small>Published</small><strong id="stat-published">0</strong>
+                    </div>
+                    <div class="stat">
+                      <small>Open requests</small><strong id="stat-requests">0</strong>
+                    </div>
+                  </div>
+                  <div class="tool-panel" style="margin-top: 25px">
+                    <h3>Keep your catalogue useful.</h3>
+                    <p>
+                      Add a clear title, accurate model compatibility and your own product
+                      photographs. Draft listings stay private until you publish them.
+                    </p>
+                    <button class="btn" id="overview-add">Add a listing ↗</button>
+                  </div>
+                </section>
+                <section data-panel="inventory" hidden>
+                  <div class="section-head">
+                    <h3>Listings</h3>
+                    <button class="btn" id="add-listing">+ Add listing</button>
+                  </div>
+                  <div class="toolbar">
+                    <input
+                      type="search"
+                      id="admin-search"
+                      placeholder="Search listings…"
+                      aria-label="Search admin listings"
+                    /><select id="admin-filter" aria-label="Listing status">
+                      <option value="">All statuses</option>
+                      <option>draft</option>
+                      <option>published</option>
+                      <option>archived</option>
+                    </select>
+                  </div>
+                  <div class="table-wrap">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Listing</th>
+                          <th>Category</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="admin-listings"></tbody>
+                    </table>
+                  </div>
+                </section>
+                <section data-panel="requests" hidden>
+                  <div class="section-head">
+                    <h3>Request tracker</h3>
+                    <button class="btn" id="add-request">+ Log a request</button>
+                  </div>
+                  <p class="muted" style="margin-bottom: 20px; font-size: 12px">
+                    Direct website enquiries and staff-entered follow-ups. WhatsApp messages are
+                    handled in WhatsApp.
+                  </p>
+                  <div class="table-wrap">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Customer / request</th>
+                          <th>Status</th>
+                          <th>Next step</th>
+                        </tr>
+                      </thead>
+                      <tbody id="request-list"></tbody>
+                    </table>
+                  </div>
+                </section>
+                <section data-panel="settings" hidden>
+                  <div class="tool-panel">
+                    <h3>Catalogue publishing</h3>
+                    <p>
+                      Live published listings appear in the catalogue. Export the catalogue for a
+                      static rebuild so new listings also get fully rendered search pages.
+                    </p>
+                    <div class="inline-actions">
+                      <button class="btn" id="export-catalog">Export catalogue JSON</button
+                      ><button class="btn ghost" id="export-requests">
+                        Export request tracker
+                      </button>
+                    </div>
+                  </div>
+                  <form id="settings-form" class="form-box" style="margin-top: 24px">
+                    <h3>Internal workshop settings</h3>
+                    <p style="margin: 15px 0; font-size: 12px">
+                      Private operations notes for staff. Website contact information is maintained
+                      in the source build.
+                    </p>
+                    <label
+                      >Daily booking capacity<input
+                        name="capacity"
+                        type="number"
+                        required
+                        min="1"
+                        max="100"
+                        value="6" /></label
+                    ><label
+                      >Workshop notes<textarea
+                        name="notes"
+                        rows="3"
+                        maxlength="1500"
+                      ></textarea></label
+                    ><button class="btn">Save settings</button>
+                  </form>
+                </section>
+                <section data-panel="posts" hidden>
+                  <div class="section-head">
+                    <h3>Blog posts</h3>
+                    <button class="btn" id="add-post">+ Write or import a post</button>
+                  </div>
+                  <div id="manage-posts"></div>
+                  <button class="btn ghost" id="export-content">
+                    Export blog & pop-up content
+                  </button>
+                </section>
+                <section data-panel="popups" hidden>
+                  <div class="section-head">
+                    <h3>Pop-up campaigns</h3>
+                    <button class="btn" id="add-popup">+ Create pop-up</button>
+                  </div>
+                  <div id="manage-popups"></div>
+                </section>
+                <p id="admin-status" class="form-status" role="status"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <dialog class="dialog" id="listing-editor">
+        <div class="dialog-head">
+          <h2>Listing studio</h2>
+          <button type="button" class="icon-btn" data-close aria-label="Close editor">×</button>
+        </div>
+        <form id="listing-form">
+          <input type="hidden" name="id" /><label
+            >Title<input required name="title" maxlength="120"
+          /></label>
+          <div class="form-row">
+            <label
+              >Type<select name="kind">
+                <option value="part">Spare part</option>
+                <option value="vehicle">Vehicle</option>
+                <option value="service">Service</option>
+              </select></label
+            ><label
+              >Category<select name="category">
+                <option>Electrical</option>
+                <option>Cooling</option>
+                <option>Braking</option>
+                <option>Maintenance</option>
+                <option>Vehicles</option>
+              </select></label
+            >
+          </div>
+          <div class="form-row">
+            <label
+              >Compatible models / vehicle model<input
+                name="model"
+                required
+                maxlength="200" /></label
+            ><label
+              >Years / fitment note<input
+                name="year"
+                required
+                maxlength="100"
+                placeholder="2012–2017; confirm by VIN"
+            /></label>
+          </div>
+          <label
+            >Description<textarea
+              required
+              name="description"
+              rows="4"
+              minlength="20"
+              maxlength="3000"
+            ></textarea>
+          </label>
+          <div class="form-row">
+            <label
+              >Price (₦; 0 = request a quote)<input
+                name="price"
+                type="number"
+                min="0"
+                max="10000000000"
+                required
+                value="0" /></label
+            ><label
+              >Visibility<select name="status">
+                <option value="draft">Draft</option>
+                <option value="published">Published</option>
+                <option value="archived">Archived</option>
+              </select></label
+            >
+          </div>
+          <label
+            >Image URL (HTTPS or /assets/)<input
+              name="image"
+              maxlength="1500"
+              placeholder="https://…" /></label
+          ><label
+            >Gallery image URLs — one per line, drag-free ordering by line position<textarea
+              name="gallery"
+              rows="4"
+              maxlength="18000"
+            ></textarea></label
+          ><label
+            >Upload gallery photos (up to 12; each under 5 MB)<input
+              id="gallery-upload"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              multiple
+          /></label>
+          <div class="gallery-thumbs" id="gallery-edit-preview"></div>
+          <label style="display: flex; align-items: center; gap: 12px"
+            ><input name="featured" type="checkbox" style="width: 18px" />Featured listing</label
+          >
+          <p id="editor-status" class="form-status"></p>
+          <button class="btn" type="submit">Save listing ↗</button>
+        </form>
+      </dialog>
+      <dialog class="dialog" id="request-editor">
+        <div class="dialog-head">
+          <h2>Log a request</h2>
+          <button class="icon-btn" data-close aria-label="Close request form">×</button>
+        </div>
+        <form id="request-form">
+          <label>Customer name<input name="name" required maxlength="100" /></label
+          ><label>Phone<input name="phone" required maxlength="25" type="tel" /></label
+          ><label
+            >Summary<textarea name="summary" required maxlength="1500" rows="4"></textarea></label
+          ><button class="btn">Save request</button>
+        </form>
+      </dialog>
+      <dialog class="dialog wide-dialog" id="post-editor">
+        <div class="dialog-head">
+          <h2>Publishing studio</h2>
+          <button class="icon-btn" data-close aria-label="Close publishing studio">×</button>
+        </div>
+        <form id="post-form">
+          <input type="hidden" name="id" />
+          <div class="form-row">
+            <label>Post title<input name="title" required maxlength="160" /></label
+            ><label
+              >URL slug<input name="slug" required pattern="[a-z0-9]+(-[a-z0-9]+)*" maxlength="100"
+            /></label>
+          </div>
+          <label
+            >Summary / search description<textarea
+              name="excerpt"
+              required
+              maxlength="300"
+              rows="2"
+            ></textarea>
+          </label>
+          <div class="form-row">
+            <label
+              >Author<input
+                name="author"
+                required
+                maxlength="100"
+                value="Tecur Automotive" /></label
+            ><label
+              >Visibility<select name="status">
+                <option value="draft">Draft</option>
+                <option value="published">Published</option>
+                <option value="archived">Archived</option>
+              </select></label
+            >
+          </div>
+          <label>Cover photo URL<input name="cover" maxlength="1500" type="url" /></label
+          ><label
+            >Import document (.docx, .html or .txt; maximum 5 MB)<input
+              id="document-import"
+              type="file"
+              accept=".docx,.html,.htm,.txt"
+          /></label>
+          <p class="muted small-note">
+            Word imports retain headings, paragraphs, embedded images and tables. Review the result;
+            page-layout details and floating shapes may change. Legacy .doc and PDF files must first
+            be converted to .docx.
+          </p>
+          <div class="editor-toolbar" role="toolbar" aria-label="Article formatting">
+            <button type="button" data-format="bold">Bold</button
+            ><button type="button" data-format="italic">Italic</button
+            ><button type="button" data-format="underline">Underline</button
+            ><button type="button" data-block="h2">Heading</button
+            ><button type="button" data-block="p">Paragraph</button
+            ><button type="button" data-format="insertUnorderedList">Bullets</button
+            ><button type="button" data-format="insertOrderedList">Numbering</button
+            ><button type="button" id="insert-link">Link</button
+            ><button type="button" id="insert-table">Table</button
+            ><button type="button" id="insert-image">Image</button
+            ><button type="button" data-format="undo">Undo</button
+            ><button type="button" data-format="redo">Redo</button
+            ><button type="button" data-format="removeFormat">Clear format</button>
+          </div>
+          <input type="file" id="article-image" accept="image/png,image/jpeg,image/webp" hidden />
+          <div
+            id="rich-editor"
+            contenteditable="true"
+            role="textbox"
+            aria-label="Article content"
+            aria-multiline="true"
+            class="rich-editor article-body"
+          ></div>
+          <div class="inline-actions">
+            <button type="button" id="post-preview" class="btn ghost">Preview article</button
+            ><button class="btn" type="submit">Save post</button>
+          </div>
+          <p id="post-status" role="status"></p>
+        </form>
+      </dialog>
+      <dialog class="dialog wide-dialog" id="article-preview">
+        <div class="dialog-head">
+          <h2>Article preview</h2>
+          <button data-close class="icon-btn" aria-label="Close article preview">×</button>
+        </div>
+        <article class="article-body" id="article-preview-body"></article>
+      </dialog>
+      <dialog class="dialog" id="popup-editor">
+        <div class="dialog-head">
+          <h2>Pop-up designer</h2>
+          <button class="icon-btn" data-close aria-label="Close pop-up designer">×</button>
+        </div>
+        <form id="popup-form">
+          <input name="id" type="hidden" /><label
+            >Headline<input name="title" required maxlength="120" /></label
+          ><label>Message<textarea name="body" required maxlength="600" rows="3"></textarea></label>
+          <div class="form-row">
+            <label
+              >Template<select name="template">
+                <option value="modal">Centred announcement</option>
+                <option value="image">Photo feature</option>
+                <option value="banner">Bottom banner</option>
+                <option value="card">Corner card</option>
+              </select></label
+            ><label
+              >State<select name="status">
+                <option value="draft">Off / draft</option>
+                <option value="published">On / published</option>
+                <option value="archived">Archived</option>
+              </select></label
+            >
+          </div>
+          <label>Photo URL (photo template)<input name="image" maxlength="1500" /></label
+          ><label
+            >Or upload a photo<input
+              name="photo"
+              type="file"
+              accept="image/png,image/jpeg,image/webp"
+          /></label>
+          <div class="form-row">
+            <label>Button text<input name="button" maxlength="60" value="Book a service" /></label
+            ><label
+              >Button destination<input name="url" required maxlength="1500" value="/book/"
+            /></label>
+          </div>
+          <label
+            >Show on paths (comma separated, or * for all)<input
+              name="pages"
+              required
+              maxlength="500"
+              value="/"
+          /></label>
+          <div class="form-row">
+            <label
+              >Trigger<select name="trigger">
+                <option value="delay">Time on page</option>
+                <option value="scroll">Scroll progress</option>
+              </select></label
+            ><label
+              >Frequency<select name="frequency">
+                <option value="session">Once per session</option>
+                <option value="daily">Once per 24 hours</option>
+                <option value="always">Every page visit</option>
+              </select></label
+            ><label
+              >Delay in seconds<input
+                name="delay"
+                required
+                type="number"
+                min="0"
+                max="600"
+                value="8" /></label
+            ><label
+              >Scroll percentage<input
+                name="threshold"
+                required
+                type="number"
+                min="10"
+                max="95"
+                value="50" /></label
+            ><label>Start (your local time)<input name="startsAt" type="datetime-local" /></label
+            ><label>End (your local time)<input name="endsAt" type="datetime-local" /></label
+            ><label
+              >Priority (highest appears first)<input
+                name="priority"
+                required
+                type="number"
+                min="0"
+                max="100"
+                value="0"
+            /></label>
+          </div>
+          <div class="inline-actions">
+            <button type="button" class="btn ghost" id="preview-popup">Preview design</button
+            ><button class="btn" type="submit">Save pop-up</button>
+          </div>
+          <p id="popup-status" role="status"></p>
+        </form>
+      </dialog>
+    </main>
+    <footer class="footer">
+      <div class="shell">
+        <div class="footer-top">
+          <div>
+            <a class="brand" href="/"
+              ><img src="/assets/tecur-logo.jpg" alt="Tecur Automotive" width="1536" height="1536"
+            /></a>
+            <p>Toyota repairs, servicing and spare parts in Lekki.</p>
+            <p>Independent Toyota specialist.<br />Not affiliated with Toyota Motor Corporation.</p>
+          </div>
+          <div>
+            <h4>Explore</h4>
+            <a href="/services/">Services</a><a href="/parts/">Parts & listings</a
+            ><a href="/garage/">My Toyota</a><a href="/journal/">Car guides</a
+            ><a href="/before-you-pay/">Before you pay</a><a href="/about/">About</a>
+          </div>
+          <div>
+            <h4>Let’s connect</h4>
+            <a href="/app/">Get the TECUR app</a><a href="/contact/">Visit & contact</a
+            ><a href="/book/">Request a service</a><a href="tel:+2347085990547">+234 708 599 0547</a
+            ><a href="https://wa.me/2347043966114" target="_blank" rel="noopener">WhatsApp ↗</a>
+          </div>
+          <div>
+            <h4>The workshop</h4>
+            <p>2 Lawal St, Lekki Peninsula II<br />Lagos 106104, Nigeria</p>
+            <p>Monday–Saturday<br />8:00 AM–6:00 PM</p>
+            <a href="mailto:tecurautomotive@gmail.com">tecurautomotive@gmail.com</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 Tecur Automotive. Built for the long run.</span
+          ><span><a href="/privacy/">Privacy & terms</a> · <a href="/admin/">Admin</a></span>
+        </div>
+      </div>
+    </footer>
+    <dialog class="dialog" id="command">
+      <div class="dialog-head">
+        <h2>Where to?</h2>
+        <button class="icon-btn" data-close aria-label="Close quick navigation">×</button>
+      </div>
+      <input
+        id="command-search"
+        type="search"
+        placeholder="Search services, tools and pages…"
+        aria-label="Search pages"
+      />
+      <div class="command-links">
+        <a href="/services/">Services<span>↗</span></a
+        ><a href="/parts/">Parts & listings<span>↗</span></a
+        ><a href="/garage/">My Toyota<span>↗</span></a
+        ><a href="/journal/">Car guides<span>↗</span></a
+        ><a href="/before-you-pay/">Before you pay<span>↗</span></a
+        ><a href="/about/">About<span>↗</span></a
+        ><a href="/book/">Book a service<span>↗</span></a
+        ><a href="/contact/">Contact the workshop<span>↗</span></a
+        ><a href="/admin/">Admin workspace<span>↗</span></a>
+      </div>
+      <small class="muted">Quick access · Press / to open · Esc to close</small>
+    </dialog>
+    <div class="toast hidden" role="status" id="toast"></div>
+    <script type="module" src="/assets/app.js"></script>
+    <script type="module" src="/assets/pwa.js"></script>
+    <script type="module" src="/assets/public-content.js"></script>
+    <script type="module" src="/assets/admin.js"></script>
+  </body>
+</html>

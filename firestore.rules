@@ -1,0 +1,126 @@
+rules_version = '2';
+service cloud.firestore {
+ match /databases/{database}/documents {
+  function admin() { return request.auth != null && request.auth.token.get('admin', false) == true; }
+  function bounded(s, min, max) { return s is string && s.size() >= min && s.size() <= max; }
+  function media(u) { return u is string && u.size() <= 1500 && (u.matches('https://.*') || u.matches('/assets/[a-zA-Z0-9_.-]+')); }
+  function imageAt(l,i) { return l.size() <= i || media(l[i]); }
+  function gallery(l) { return l is list && l.size() <= 12 && imageAt(l,0) && imageAt(l,1) && imageAt(l,2) && imageAt(l,3) && imageAt(l,4) && imageAt(l,5) && imageAt(l,6) && imageAt(l,7) && imageAt(l,8) && imageAt(l,9) && imageAt(l,10) && imageAt(l,11); }
+  function listingValid() {
+   let d = request.resource.data;
+   return d.keys().hasAll(['title','kind','category','model','year','description','price','status','image','featured','updatedAt'])
+    && d.keys().hasOnly(['title','kind','category','model','year','description','price','status','image','images','featured','updatedAt'])
+    && bounded(d.title,3,120) && bounded(d.model,1,200) && bounded(d.year,1,100)
+    && bounded(d.description,20,3000) && bounded(d.category,1,50)
+    && d.kind in ['part','vehicle','service'] && d.status in ['draft','published','archived']
+    && d.price is number && d.price >= 0 && d.price <= 10000000000
+    && d.featured is bool && bounded(d.image,1,1500)
+    && (d.image.matches('https://.*') || d.image.matches('/assets/[a-zA-Z0-9_.-]+'))
+    && gallery(d.get('images',[])) && d.updatedAt == request.time;
+  }
+  match /listings/{id} {
+   allow get, list: if admin() || resource.data.status == 'published';
+   allow create, update: if admin() && listingValid();
+   allow delete: if admin();
+  }
+  match /requests/{id} {
+   allow read, delete: if admin();
+   allow update: if admin() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status','updatedAt']) && request.resource.data.status in ['new','contacted','booked','closed'] && request.resource.data.updatedAt == request.time;
+   allow create: if admin()
+    && request.resource.data.keys().hasOnly(['name','phone','summary','status','updatedAt'])
+    && request.resource.data.keys().hasAll(['name','phone','summary','status','updatedAt'])
+    && bounded(request.resource.data.name,1,100)
+    && bounded(request.resource.data.phone,1,25)
+    && bounded(request.resource.data.summary,1,3000)
+    && request.resource.data.status in ['new','contacted','booked','closed']
+    && request.resource.data.updatedAt == request.time;
+  }
+  match /settings/workshop {
+   allow read, delete: if admin();
+   allow create, update: if admin()
+    && request.resource.data.keys().hasOnly(['capacity','notes'])
+    && request.resource.data.keys().hasAll(['capacity','notes'])
+    && request.resource.data.capacity is int
+    && request.resource.data.capacity >= 1 && request.resource.data.capacity <= 100
+    && bounded(request.resource.data.notes,0,1500);
+  }
+  match /posts/{id} {
+   allow get,list: if admin() || resource.data.status == 'published';
+   allow delete: if admin();
+   allow create,update: if admin()
+    && request.resource.data.keys().hasAll(['title','slug','excerpt','author','status','cover','html','publishedAt','updatedAt'])
+    && request.resource.data.keys().hasOnly(['title','slug','excerpt','author','status','cover','html','publishedAt','updatedAt'])
+    && bounded(request.resource.data.title,1,160) && bounded(request.resource.data.slug,1,100)
+    && request.resource.data.slug.matches('[a-z0-9]+(-[a-z0-9]+)*')
+    && bounded(request.resource.data.excerpt,1,300) && bounded(request.resource.data.author,1,100)
+    && bounded(request.resource.data.html,20,500000) && bounded(request.resource.data.publishedAt,1,40)
+    && (request.resource.data.cover == '' || media(request.resource.data.cover))
+    && request.resource.data.status in ['draft','published','archived']
+    && request.resource.data.updatedAt == request.time;
+  }
+  match /popups/{id} {
+   allow get,list: if admin() || resource.data.status == 'published';
+   allow delete: if admin();
+   allow create,update: if admin()
+    && request.resource.data.keys().hasAll(['title','body','template','status','image','button','url','pages','trigger','frequency','delay','threshold','startsAt','endsAt','priority','updatedAt'])
+    && request.resource.data.keys().hasOnly(['title','body','template','status','image','button','url','pages','trigger','frequency','delay','threshold','startsAt','endsAt','priority','updatedAt'])
+    && bounded(request.resource.data.title,1,120) && bounded(request.resource.data.body,1,600)
+    && request.resource.data.template in ['modal','image','banner','card']
+    && request.resource.data.status in ['draft','published','archived']
+    && (request.resource.data.image == '' || media(request.resource.data.image))
+    && bounded(request.resource.data.button,0,60) && bounded(request.resource.data.url,1,1500)
+    && request.resource.data.url.matches('(https://.*|/[^/].*|/)')
+    && bounded(request.resource.data.pages,1,500)
+    && request.resource.data.trigger in ['delay','scroll'] && request.resource.data.frequency in ['session','daily','always']
+    && request.resource.data.delay is number && request.resource.data.delay >= 0 && request.resource.data.delay <= 600
+    && request.resource.data.threshold is number && request.resource.data.threshold >= 10 && request.resource.data.threshold <= 95
+    && request.resource.data.priority is number && request.resource.data.priority >= 0 && request.resource.data.priority <= 100
+    && bounded(request.resource.data.startsAt,0,40) && bounded(request.resource.data.endsAt,0,40)
+    && request.resource.data.updatedAt == request.time;
+  }
+  // Public discussion is scoped to published articles. Admin identity is a signed claim.
+  function publicPost(postId) {
+   return get(/databases/$(database)/documents/posts/$(postId)).data.status == 'published';
+  }
+  match /commentLimits/{uid} {
+   allow read: if request.auth != null && request.auth.uid == uid;
+   allow create, update: if request.auth != null && request.auth.uid == uid
+    && request.resource.data.keys().hasOnly(['updatedAt','postId','commentId'])
+    && request.resource.data.updatedAt == request.time
+    && bounded(request.resource.data.postId,1,100) && bounded(request.resource.data.commentId,1,100)
+    && (!exists(/databases/$(database)/documents/commentLimits/$(uid))
+        || request.time >= resource.data.updatedAt + duration.value(15,'s'))
+    && getAfter(/databases/$(database)/documents/posts/$(request.resource.data.postId)/comments/$(request.resource.data.commentId)).data.uid == uid
+    && getAfter(/databases/$(database)/documents/posts/$(request.resource.data.postId)/comments/$(request.resource.data.commentId)).data.createdAt == request.time;
+  }
+  match /posts/{postId}/comments/{commentId} {
+   allow read: if admin() || publicPost(postId);
+   allow create: if request.auth != null && publicPost(postId)
+    && request.resource.data.keys().hasAll(['uid','name','text','parentId','isAdmin','createdAt'])
+    && request.resource.data.keys().hasOnly(['uid','name','text','parentId','isAdmin','createdAt'])
+    && request.resource.data.uid == request.auth.uid
+    && bounded(request.resource.data.name,2,60) && bounded(request.resource.data.text,2,2000)
+    && bounded(request.resource.data.parentId,0,100)
+    && request.resource.data.isAdmin == admin()
+    && (!admin() || request.resource.data.name == 'TECUR Automotive')
+    && request.resource.data.createdAt == request.time
+    && (request.resource.data.parentId == ''
+        || (request.resource.data.parentId != commentId
+            && get(/databases/$(database)/documents/posts/$(postId)/comments/$(request.resource.data.parentId)).data.parentId == ''))
+    && getAfter(/databases/$(database)/documents/commentLimits/$(request.auth.uid)).data.updatedAt == request.time
+    && getAfter(/databases/$(database)/documents/commentLimits/$(request.auth.uid)).data.postId == postId
+    && getAfter(/databases/$(database)/documents/commentLimits/$(request.auth.uid)).data.commentId == commentId;
+   allow delete: if admin();
+   allow update: if false;
+   match /likes/{uid} {
+    allow read: if admin() || publicPost(postId);
+    allow create: if request.auth != null && request.auth.uid == uid && publicPost(postId)
+     && exists(/databases/$(database)/documents/posts/$(postId)/comments/$(commentId))
+     && request.resource.data.keys().hasOnly(['createdAt']) && request.resource.data.createdAt == request.time;
+    allow delete: if request.auth != null && request.auth.uid == uid && publicPost(postId);
+    allow update: if false;
+   }
+  }
+  match /{document=**} { allow read, write: if false; }
+ }
+}

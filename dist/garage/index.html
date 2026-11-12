@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en-NG">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#17185f" />
+    <title>My Toyota — service planner &amp; ownership tools | Tecur Automotive</title>
+    <meta
+      name="description"
+      content="Save your Toyota details on this device, prepare a service brief and create a maintenance checklist. Practical ownership tools from Tecur Automotive."
+    />
+    <meta name="robots" content="noindex,nofollow" />
+    <link
+      rel="canonical"
+      href="https://tecur-automotive-studio.michellinoamah.chatgpt.site/garage/"
+    />
+    <meta
+      property="og:title"
+      content="My Toyota — service planner &amp; ownership tools | Tecur Automotive"
+    />
+    <meta
+      property="og:description"
+      content="Save your Toyota details on this device, prepare a service brief and create a maintenance checklist. Practical ownership tools from Tecur Automotive."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://tecur-automotive-studio.michellinoamah.chatgpt.site/garage/"
+    />
+    <meta
+      property="og:image"
+      content="https://tecur-automotive-studio.michellinoamah.chatgpt.site/assets/hero.jpg"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/assets/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/app-icon-180.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="TECUR" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="stylesheet" href="/assets/style.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "My Toyota \u2014 service planner & ownership tools",
+        "url": "https://tecur-automotive-studio.michellinoamah.chatgpt.site/garage/"
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="header">
+      <div class="nav shell">
+        <a href="/" class="brand" aria-label="Tecur Automotive home"
+          ><img src="/assets/tecur-logo.jpg" alt="Tecur Automotive" width="1536" height="1536"
+        /></a>
+        <nav class="navlinks" id="navlinks" aria-label="Main navigation">
+          <a class="" href="/services/">Services</a><a class="" href="/parts/">Parts & listings</a
+          ><a class="active" href="/garage/">My Toyota</a><a class="" href="/journal/">Car guides</a
+          ><a class="" href="/before-you-pay/">Before you pay</a
+          ><a class="" href="/about/">About</a>
+        </nav>
+        <div class="nav-right">
+          <button class="icon-btn" data-command aria-label="Search and quick navigation">⌕</button
+          ><a class="btn" href="/book/">Book a service <span aria-hidden="true">↗</span></a
+          ><button
+            class="icon-btn menu-toggle"
+            aria-label="Open menu"
+            aria-controls="navlinks"
+            aria-expanded="false"
+          >
+            ☰
+          </button>
+        </div>
+      </div>
+    </header>
+    <main id="main">
+      <section class="page-head">
+        <div class="shell">
+          <div class="breadcrumb"><a href="/">Home</a> / Your personal pit stop</div>
+          <div class="eyebrow">Your personal pit stop</div>
+          <h1>MY TOYOTA<br />PLANNER.</h1>
+          <p>
+            Save your car details, prepare for a service and estimate fuel costs. Your details and
+            checklist stay in this browser.
+          </p>
+        </div>
+      </section>
+      <section class="section" style="padding-top: 15px">
+        <div class="shell grid two">
+          <form id="garage-form" class="tool-panel">
+            <div class="step-label">01 / CAR DETAILS</div>
+            <h3>Save your car details.</h3>
+            <p>Save your model once. Carry it into your next service enquiry.</p>
+            <label
+              >Toyota model<select name="model" required>
+                <option value="">Choose your Toyota</option>
+                <option>Camry</option>
+                <option>Corolla</option>
+                <option>Prado</option>
+                <option>RAV4</option>
+                <option>Highlander</option>
+                <option>Venza</option>
+                <option>Fortuner</option>
+                <option>Hilux</option>
+                <option>Land Cruiser</option>
+                <option>Other Toyota</option>
+              </select></label
+            >
+            <div class="form-row">
+              <label
+                >Model year<input name="year" required type="number" min="1980" max="2027" /></label
+              ><label
+                >Mileage on your dashboard (km)<input
+                  name="mileage"
+                  required
+                  type="number"
+                  min="0"
+                  max="2000000"
+              /></label>
+            </div>
+            <label>Last service date<input name="lastService" type="date" /></label>
+            <div class="inline-actions">
+              <button class="btn">Save my Toyota</button
+              ><button type="button" class="btn ghost" id="garage-clear">Clear</button>
+            </div>
+            <p id="garage-status" class="form-status" role="status"></p>
+          </form>
+          <div class="tool-panel">
+            <div class="step-label">02 / BEFORE THE NEXT JOURNEY</div>
+            <h3>Before your visit</h3>
+            <div class="checklist" id="checklist">
+              <label
+                ><input type="checkbox" data-check="0" />Check tyres when cold against the vehicle
+                placard</label
+              ><label
+                ><input type="checkbox" data-check="1" />Look for new fluid leaks beneath the
+                car</label
+              ><label
+                ><input type="checkbox" data-check="2" />Check lights and windscreen
+                visibility</label
+              ><label
+                ><input type="checkbox" data-check="3" />Review service history and owner’s
+                manual</label
+              ><label
+                ><input type="checkbox" data-check="4" />Note any new sound or warning light</label
+              >
+            </div>
+            <p id="check-progress" style="font-size: 12px; margin-top: 18px">0 of 5 checked</p>
+            <progress max="5" value="0" id="check-meter"></progress
+            ><small class="muted">This checklist does not replace a professional inspection.</small>
+          </div>
+          <div class="tool-panel">
+            <div class="step-label">03 / OWNERSHIP BUDGET EXPLORER</div>
+            <h3>Know your running costs.</h3>
+            <p>An editable planning estimate. It is not a service or fuel quotation.</p>
+            <div class="form-row">
+              <label
+                >Monthly distance (km)<input
+                  id="cost-distance"
+                  type="number"
+                  min="0"
+                  max="50000"
+                  value="1000" /></label
+              ><label
+                >Consumption (L/100km)<input
+                  id="cost-economy"
+                  type="number"
+                  min="1"
+                  max="50"
+                  step="0.1"
+                  value="10" /></label
+              ><label
+                >Fuel price (₦/litre)<input
+                  id="cost-fuel"
+                  type="number"
+                  min="0"
+                  max="10000"
+                  value="1000" /></label
+              ><label
+                >Maintenance reserve (₦/month)<input
+                  id="cost-reserve"
+                  type="number"
+                  min="0"
+                  max="10000000"
+                  value="20000"
+              /></label>
+            </div>
+            <h3 id="cost-total" aria-live="polite">₦120,000 / month</h3>
+            <small class="muted"
+              >Illustrative inputs. Excludes insurance, finance, depreciation and unexpected
+              repairs.</small
+            >
+          </div>
+          <div class="tool-panel">
+            <div class="step-label">04 / SHORTLIST → SERVICE BRIEF</div>
+            <h3>Less explaining.<br />More understanding.</h3>
+            <p>
+              Save parts in the catalogue, then use your saved car details to prefill a booking. No
+              account needed.
+            </p>
+            <div class="inline-actions">
+              <a class="btn" href="/parts/">Find your parts <span aria-hidden="true">↗</span></a
+              ><a class="btn ghost" href="/book/"
+                >Prepare an enquiry <span aria-hidden="true">↗</span></a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <div class="shell">
+        <div class="footer-top">
+          <div>
+            <a class="brand" href="/"
+              ><img src="/assets/tecur-logo.jpg" alt="Tecur Automotive" width="1536" height="1536"
+            /></a>
+            <p>Toyota repairs, servicing and spare parts in Lekki.</p>
+            <p>Independent Toyota specialist.<br />Not affiliated with Toyota Motor Corporation.</p>
+          </div>
+          <div>
+            <h4>Explore</h4>
+            <a href="/services/">Services</a><a href="/parts/">Parts & listings</a
+            ><a href="/garage/">My Toyota</a><a href="/journal/">Car guides</a
+            ><a href="/before-you-pay/">Before you pay</a><a href="/about/">About</a>
+          </div>
+          <div>
+            <h4>Let’s connect</h4>
+            <a href="/app/">Get the TECUR app</a><a href="/contact/">Visit & contact</a
+            ><a href="/book/">Request a service</a><a href="tel:+2347085990547">+234 708 599 0547</a
+            ><a href="https://wa.me/2347043966114" target="_blank" rel="noopener">WhatsApp ↗</a>
+          </div>
+          <div>
+            <h4>The workshop</h4>
+            <p>2 Lawal St, Lekki Peninsula II<br />Lagos 106104, Nigeria</p>
+            <p>Monday–Saturday<br />8:00 AM–6:00 PM</p>
+            <a href="mailto:tecurautomotive@gmail.com">tecurautomotive@gmail.com</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 Tecur Automotive. Built for the long run.</span
+          ><span><a href="/privacy/">Privacy & terms</a> · <a href="/admin/">Admin</a></span>
+        </div>
+      </div>
+    </footer>
+    <dialog class="dialog" id="command">
+      <div class="dialog-head">
+        <h2>Where to?</h2>
+        <button class="icon-btn" data-close aria-label="Close quick navigation">×</button>
+      </div>
+      <input
+        id="command-search"
+        type="search"
+        placeholder="Search services, tools and pages…"
+        aria-label="Search pages"
+      />
+      <div class="command-links">
+        <a href="/services/">Services<span>↗</span></a
+        ><a href="/parts/">Parts & listings<span>↗</span></a
+        ><a href="/garage/">My Toyota<span>↗</span></a
+        ><a href="/journal/">Car guides<span>↗</span></a
+        ><a href="/before-you-pay/">Before you pay<span>↗</span></a
+        ><a href="/about/">About<span>↗</span></a
+        ><a href="/book/">Book a service<span>↗</span></a
+        ><a href="/contact/">Contact the workshop<span>↗</span></a
+        ><a href="/admin/">Admin workspace<span>↗</span></a>
+      </div>
+      <small class="muted">Quick access · Press / to open · Esc to close</small>
+    </dialog>
+    <div class="toast hidden" role="status" id="toast"></div>
+    <script type="module" src="/assets/app.js"></script>
+    <script type="module" src="/assets/pwa.js"></script>
+    <script type="module" src="/assets/public-content.js"></script>
+  </body>
+</html>
