@@ -4,7 +4,7 @@ import { sanitize, cleanURL, gallery } from "./content.js";
 import { schedulePopups } from "./popup.js";
 const visualStyle = document.createElement("link");
 visualStyle.rel = "stylesheet";
-visualStyle.href = "/assets/visual-refresh.css";
+visualStyle.href = new URL("./visual-refresh.css?v=20261113-mobile2", import.meta.url).href;
 document.head.append(visualStyle);
 function node(tag, text, cls) {
   const el = document.createElement(tag);
